@@ -1,8 +1,6 @@
 use std::collections::HashMap;
 
 struct LineCount {
-    first: Option<i32>,
-    last: Option<i32>,
     first_num: Option<i32>,
     first_num_index: usize,
     last_num: Option<i32>,
@@ -37,8 +35,6 @@ pub fn run(lines: &Vec<String>) {
 
     for line in lines {
         let mut lc = LineCount {
-            first: None,
-            last: None,
             first_num: None,
             first_num_index: 0,
             last_num: None,
