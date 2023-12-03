@@ -5,10 +5,33 @@ use anyhow::Result;
 
 fn main() -> Result<()> {
     // day1()?;
-    day2()?;
+    // day2()?;
+    day3()?;
     Ok(())
 }
 
+#[allow(dead_code)]
+fn day3() -> Result<()> {
+    let test_input = parser::parse_input("inputs/3/test.txt")?;
+    let test_input = parser::remove_empty_elements(test_input);
+    let test2_input = parser::parse_input("inputs/3/test2.txt")?;
+    let test2_input = parser::remove_empty_elements(test2_input);
+    let prod_input = parser::parse_input("inputs/3/prod.txt")?;
+    let prod_input = parser::remove_empty_elements(prod_input);
+
+    // part1
+    // days::three::part1::run(&test_input);
+    // days::three::part1::run(&prod_input);
+
+    // part2
+    days::three::part2::run(&test_input);
+    days::three::part2::run(&test2_input);
+    days::three::part2::run(&prod_input);
+
+    Ok(())
+}
+
+#[allow(dead_code)]
 fn day2() -> Result<()> {
     let test_input = parser::parse_input("inputs/2/test.txt")?;
     let test_input = parser::remove_empty_elements(test_input);
