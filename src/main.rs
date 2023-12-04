@@ -1,12 +1,35 @@
+#![allow(unused_variables)]
+#![allow(dead_code)]
+
 mod days;
 mod parser;
 
 use anyhow::Result;
 
+#[allow(dead_code)]
 fn main() -> Result<()> {
     // day1()?;
     // day2()?;
-    day3()?;
+    // day3()?;
+    day4()?;
+    Ok(())
+}
+
+#[allow(dead_code)]
+fn day4() -> Result<()> {
+    let test_input = parser::parse_input("inputs/4/test.txt")?;
+    let test_input = parser::remove_empty_elements(test_input);
+    let prod_input = parser::parse_input("inputs/4/prod.txt")?;
+    let prod_input = parser::remove_empty_elements(prod_input);
+
+    // part1
+    // days::four::part1::run(&test_input);
+    // days::four::part1::run(&prod_input);
+
+    // part2
+    // days::four::part2::run(&test_input);
+    days::four::part2::run(&prod_input);
+
     Ok(())
 }
 
