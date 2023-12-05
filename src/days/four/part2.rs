@@ -1,4 +1,4 @@
-use std::collections::{HashMap, VecDeque};
+use std::collections::VecDeque;
 
 fn score_card_line(line: String) -> usize {
     let mut card_score = 0;
