@@ -27,7 +27,7 @@ fn day4() -> Result<()> {
     // days::four::part1::run(&prod_input);
 
     // part2
-    // days::four::part2::run(&test_input);
+    days::four::part2::run(&test_input);
     days::four::part2::run(&prod_input);
 
     Ok(())
