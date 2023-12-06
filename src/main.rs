@@ -12,7 +12,26 @@ fn main() -> Result<()> {
     // day2()?;
     // day3()?;
     // day4()?;
-    day5()?;
+    // day5()?;
+    day6()?;
+    Ok(())
+}
+
+#[allow(dead_code)]
+fn day6() -> Result<()> {
+    let test_input = parser::parse_input("inputs/6/test.txt")?;
+    let test_input = parser::remove_empty_elements(test_input);
+    let prod_input = parser::parse_input("inputs/6/prod.txt")?;
+    let prod_input = parser::remove_empty_elements(prod_input);
+
+    // part1
+    // days::six::part1::run(&test_input);
+    // days::six::part1::run(&prod_input);
+
+    // part2
+    days::six::part2::run(&test_input);
+    days::six::part2::run(&prod_input);
+
     Ok(())
 }
 
