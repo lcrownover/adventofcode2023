@@ -26,12 +26,12 @@ fn day7() -> Result<()> {
     let prod_input = parser::remove_empty_elements(prod_input);
 
     // part1
-    days::seven::part1::run(&test_input);
-    days::seven::part1::run(&prod_input);
+    // days::seven::part1::run(&test_input);
+    // days::seven::part1::run(&prod_input);
 
     // part2
-    // days::seven::part2::run(&test_input);
-    // days::seven::part2::run(&prod_input);
+    days::seven::part2::run(&test_input);
+    days::seven::part2::run(&prod_input);
 
     Ok(())
 }

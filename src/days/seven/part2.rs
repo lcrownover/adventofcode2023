@@ -1,3 +1,4 @@
+use core::num;
 use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
@@ -30,7 +31,7 @@ impl Hand {
     fn outranks(&self, other: &Hand) -> bool {
         if self.hand_type == other.hand_type {
             let order = vec![
-                '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A',
+                'J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A',
             ];
             for i in 0..self.text.len() {
                 let mine = order
@@ -82,32 +83,61 @@ impl Hand {
         //  4QKJJ -> 4QKKK
         //  8JJ77 -> 87777
 
+        let num_j: u32 = *m.get(&'J').unwrap_or(&0);
+        let hand_without_jacks = m
+            .iter()
+            .filter(|&(k, v)| *k != 'J')
+            .collect::<HashMap<&char, &u32>>();
+
         // map is built, now we classify based on patterns
+        println!("classifying {text} {num_j}");
 
         // check for five of a kind
-        if m.values().any(|&v| v == 5) {
+        if hand_without_jacks.values().any(|&v| v + num_j == 5) || num_j == 5 {
             return HandType::FiveOfAKind;
         }
         // four of a kind
-        if m.values().any(|&v| v == 4) {
+        if hand_without_jacks.values().any(|&v| v + num_j == 4) {
             return HandType::FourOfAKind;
         }
         // full house
-        if m.values().any(|&v| v == 3) && m.values().any(|&v| v == 2) {
-            return HandType::FullHouse;
+        // full house needs to run the first part,
+        // then run the second part but ignore the key from the first part
+        let mut full_house_filter_char: char = 'X';
+        if hand_without_jacks.values().any(|&v| v + num_j == 3) {
+            // let's check for a full house
+            for (k, v) in hand_without_jacks.iter() {
+                if *v + num_j == 3 {
+                    full_house_filter_char = **k;
+                }
+            }
+            // we found a 3 count, lets remove k from hand and check for v == 2
+            if hand_without_jacks
+                .clone()
+                .into_iter()
+                .filter(|&(k, v)| *k != full_house_filter_char)
+                .collect::<HashMap<&char, &u32>>()
+                .values()
+                .any(|&v| *v == 2)
+            {
+                return HandType::FullHouse;
+            }
         }
         // three of a kind
-
-        if m.values().any(|&v| v == 3) {
+        if hand_without_jacks.values().any(|&v| v + num_j == 3) {
             return HandType::ThreeOfAKind;
         }
         // two pairs
-        if m.values().filter(|&v| *v == 2).count() == 2 {
+        if hand_without_jacks
+            .values()
+            .filter(|&v| *v + num_j == 2)
+            .count()
+            == 2
+        {
             return HandType::TwoPair;
         }
-
         // one pair
-        if m.values().any(|&v| v == 2) {
+        if hand_without_jacks.values().any(|&v| v + num_j == 2) {
             return HandType::OnePair;
         }
         // high card
@@ -160,5 +190,8 @@ pub fn run(lines: &Vec<String>) {
     }
 
     let sorted_hands = sort_hands(hands.clone());
-    println!("{:?}", score_hands(sorted_hands))
+    for hand in &sorted_hands {
+        println!("{} {:?}", hand.text, hand.hand_type)
+    }
+    println!("{:?}", score_hands(sorted_hands));
 }
